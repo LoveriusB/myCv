@@ -1,3 +1,14 @@
+html::-webkit-scrollbar {
+  display: none;
+}
+
+.master {
+  background-image: url('../Images/background.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
 .App {
   text-align: center;
 }
