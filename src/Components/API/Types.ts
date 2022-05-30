@@ -1,0 +1,7 @@
+export enum DefaultValueType {
+  PERCENT_STRING = "PERCENT_STRING",
+  NUMBER_STRING = "NUMBER_STRING",
+  CLASSIC_NUMBER = "CLASSIC_NUMBER",
+}
+
+export {};
