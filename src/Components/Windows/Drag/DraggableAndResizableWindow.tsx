@@ -30,6 +30,10 @@ export interface DraggableAndResizableWindowProps {
     x: number | string;
     y: number | string;
   };
+  initialSize?: {
+    width: number;
+    height: number;
+  };
   children?: React.ReactNode;
 }
 
@@ -46,10 +50,14 @@ const DraggableAndResizableWindow: React.FC<
   disableResizing = false,
   disableDragging = false,
   initialPosition = { x: "20%", y: "20%" },
+  initialSize = { width: "20%", height: "20%" },
   children,
 }) => {
   const localStyles = useStyles();
-  const { data, setData, onMouseDown } = useDraggable(initialPosition);
+  const { data, setData, onMouseDown } = useDraggable(
+    initialPosition,
+    initialSize
+  );
 
   const childrenWithProps = disableDragging
     ? children

@@ -1,7 +1,7 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import { DraggableWindowProps } from "../Drag/DraggableAndResizableWindow";
-import TerminalButton from "./TerminalButton";
+import WindowActionButtons from "../ui/WindowActionButtons";
 
 interface TerminalProps extends DraggableWindowProps {}
 
@@ -15,12 +15,6 @@ export const useTerminalStyles = makeStyles({
     borderTopRightRadius: 8,
     background: "black",
     width: "auto",
-  },
-  headerButtons: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    position: "absolute",
   },
   headerText: {
     margin: "0 auto",
@@ -52,12 +46,10 @@ const Terminal: React.FC<TerminalProps> = ({ onMouseDown }) => {
   return (
     <>
       <Grid className={localStyles.windowHeader} onMouseDown={onMouseDown}>
-        <Grid className={localStyles.headerButtons}>
-          <TerminalButton backgroundColor="rgba(255, 59, 48, 1)" />
-          <TerminalButton backgroundColor="rgba(255, 204, 0, 1)" />
-          <TerminalButton backgroundColor="rgba(40, 205, 65, 1)" />
+        <Grid>
+          <WindowActionButtons />
         </Grid>
-        <Typography className={localStyles.headerText}>Children</Typography>
+        <Typography className={localStyles.headerText}>Terminal</Typography>
       </Grid>
       <Grid className={localStyles.windowBody}>Hello</Grid>
     </>

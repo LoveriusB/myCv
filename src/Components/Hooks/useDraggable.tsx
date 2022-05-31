@@ -40,14 +40,20 @@ export const getTypeOfDefaultPosition = (position: {
   return { x: xType, y: yType };
 };
 
-export const useDraggable = (position: {
-  x: number | string;
-  y: number | string;
-}) => {
+export const useDraggable = (
+  position: {
+    x: number | string;
+    y: number | string;
+  },
+  initialSize: {
+    width: number | string;
+    height: number | string;
+  }
+) => {
   const defaultDataTypes = getTypeOfDefaultPosition(position);
   const [data, setData] = useState<DraggableAndResizableElementsData>({
-    width: 200,
-    height: 200,
+    width: initialSize.width,
+    height: initialSize.height,
     x: position.x,
     y: position.y,
     isDragging: false,
