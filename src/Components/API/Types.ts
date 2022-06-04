@@ -1,3 +1,5 @@
+import { FC } from "react";
+
 export enum DefaultValueType {
   PERCENT_STRING = "PERCENT_STRING",
   NUMBER_STRING = "NUMBER_STRING",
@@ -18,6 +20,5 @@ export interface OpenedWindow {
   component: FC<TerminalProps>;
   windowName: string;
 }
-[];
 
 export {};
