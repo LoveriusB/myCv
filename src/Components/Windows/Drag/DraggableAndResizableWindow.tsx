@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 import { toNumber } from "lodash";
 import React, { ReactElement, useEffect } from "react";
 import { Rnd, RndResizeCallback } from "react-rnd";
-import { DefaultValueType } from "../../API/Types";
+import { DefaultValueType, Position, Size } from "../../API/Types";
 import {
   getTypeOfDefaultPosition,
   useDraggable,
@@ -26,14 +26,8 @@ export interface DraggableWindowProps {
 export interface DraggableAndResizableWindowProps {
   disableResizing?: boolean;
   disableDragging?: boolean;
-  initialPosition?: {
-    x: number | string;
-    y: number | string;
-  };
-  initialSize?: {
-    width: number;
-    height: number;
-  };
+  initialPosition?: Position;
+  initialSize?: Size;
   children?: React.ReactNode;
 }
 

@@ -4,11 +4,22 @@ import DraggableAndResizableWindow from "./Components/Windows/Drag/DraggableAndR
 import Terminal from "./Components/Windows/Terminal/Terminal";
 
 const App = () => {
+  const openedWindows = [
+    {
+      component: Terminal,
+      windowName: "Terminal",
+    },
+  ];
+
   return (
     <Grid className={"master"}>
-      <DraggableAndResizableWindow>
-        <Terminal />
-      </DraggableAndResizableWindow>
+      {openedWindows.map((window) => {
+        return (
+          <DraggableAndResizableWindow key={window.windowName}>
+            <window.component />
+          </DraggableAndResizableWindow>
+        );
+      })}
     </Grid>
   );
 };
