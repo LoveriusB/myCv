@@ -1,9 +1,9 @@
 import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
-import { DraggableWindowProps } from "../Drag/DraggableAndResizableWindow";
+import { windowComponent } from "../../API/Types";
 import WindowActionButtons from "../ui/WindowActionButtons";
 
-interface TerminalProps extends DraggableWindowProps {}
+interface TerminalProps extends windowComponent {}
 
 export const useTerminalStyles = makeStyles({
   windowHeader: {
@@ -41,13 +41,22 @@ export const useTerminalStyles = makeStyles({
   },
 });
 
-const Terminal: React.FC<TerminalProps> = ({ onMouseDown }) => {
+const Terminal: React.FC<TerminalProps> = ({
+  onMouseDown,
+  onCloseButtonClick,
+  onGrowButtonClick,
+  onHideButtonClick,
+}) => {
   const localStyles = useTerminalStyles();
   return (
     <>
       <Grid className={localStyles.windowHeader} onMouseDown={onMouseDown}>
         <Grid>
-          <WindowActionButtons />
+          <WindowActionButtons
+            onCloseButtonClick={onCloseButtonClick}
+            onGrowButtonClick={onGrowButtonClick}
+            onHideButtonClick={onHideButtonClick}
+          />
         </Grid>
         <Typography className={localStyles.headerText}>Terminal</Typography>
       </Grid>

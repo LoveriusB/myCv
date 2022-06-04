@@ -19,16 +19,14 @@ const useStyles = makeStyles({
   },
 });
 
-export interface DraggableWindowProps {
-  onMouseDown?: () => void;
-}
-
 export interface DraggableAndResizableWindowProps {
+  sizeAndPosition: Size & Position;
+  setSizeAndPosition: React.Dispatch<React.SetStateAction<Size & Position>>;
   disableResizing?: boolean;
   disableDragging?: boolean;
   initialPosition?: Position;
-  initialSize?: Size;
   children?: React.ReactNode;
+  shouldBeHidden?: boolean;
 }
 
 /**
@@ -41,16 +39,18 @@ export interface DraggableAndResizableWindowProps {
 const DraggableAndResizableWindow: React.FC<
   DraggableAndResizableWindowProps
 > = ({
+  sizeAndPosition = { width: "20%", height: "20%", x: "20%", y: "20%" },
+  setSizeAndPosition,
   disableResizing = false,
   disableDragging = false,
   initialPosition = { x: "20%", y: "20%" },
-  initialSize = { width: "20%", height: "20%" },
   children,
+  shouldBeHidden,
 }) => {
   const localStyles = useStyles();
   const { data, setData, onMouseDown } = useDraggable(
     initialPosition,
-    initialSize
+    setSizeAndPosition
   );
 
   const childrenWithProps = disableDragging
@@ -65,14 +65,17 @@ const DraggableAndResizableWindow: React.FC<
    * If they are strings, this function shall parse the string to get the correct amount in number instead.
    */
   const adaptPosition = () => {
-    const defaultDataTypes = getTypeOfDefaultPosition({ x: data.x, y: data.y });
+    const defaultDataTypes = getTypeOfDefaultPosition({
+      x: sizeAndPosition.x,
+      y: sizeAndPosition.y,
+    });
     const tab = [
       {
-        positionData: data.x,
+        positionData: sizeAndPosition.x,
         defaultDataType: defaultDataTypes.x,
       },
       {
-        positionData: data.y,
+        positionData: sizeAndPosition.y,
         defaultDataType: defaultDataTypes.y,
       },
     ];
@@ -99,8 +102,8 @@ const DraggableAndResizableWindow: React.FC<
     return {
       x,
       y,
-      xDefault: data.x,
-      yDefault: data.y,
+      xDefault: sizeAndPosition.x,
+      yDefault: sizeAndPosition.y,
     };
   };
 
@@ -132,7 +135,10 @@ const DraggableAndResizableWindow: React.FC<
     position
   ) => {
     //We just need the types, nothing more.
-    const defaultTypes = getTypeOfDefaultPosition({ x: data.x, y: data.y });
+    const defaultTypes = getTypeOfDefaultPosition({
+      x: sizeAndPosition.x,
+      y: sizeAndPosition.y,
+    });
     const tab = [
       {
         positionData: position.x,
@@ -161,12 +167,14 @@ const DraggableAndResizableWindow: React.FC<
     );
     setData((prevData) => ({
       ...prevData,
-      x,
-      y,
-      width: toNumber(ref.style.width),
-      height: toNumber(ref.style.height),
       isResizing: false,
     }));
+    setSizeAndPosition({
+      width: toNumber(ref.style.width),
+      height: toNumber(ref.style.height),
+      x,
+      y,
+    });
   };
 
   /**
@@ -194,13 +202,14 @@ const DraggableAndResizableWindow: React.FC<
     <Rnd
       disableDragging
       enableResizing={!disableResizing}
-      size={{ width: data.width, height: data.height }}
+      size={{ width: sizeAndPosition.width, height: sizeAndPosition.height }}
       position={adaptPosition()}
       onResizeStart={onResizeStart}
       onResizeStop={onResizeStop}
       minHeight={MIN_HEIGHT}
       minWidth={MIN_WIDTH}
       className={localStyles.globalWindow}
+      style={{ display: shouldBeHidden ? "none" : "block" }}
     >
       {childrenWithProps}
     </Rnd>

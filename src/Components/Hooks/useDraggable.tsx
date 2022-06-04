@@ -1,14 +1,10 @@
 import { toNumber } from "lodash";
 import { useCallback, useEffect, useState } from "react";
-import { DefaultValueType } from "../API/Types";
+import { DefaultValueType, Position, Size } from "../API/Types";
 
 interface DraggableAndResizableElementsData {
-  width: number | string;
-  height: number | string;
   isDragging: boolean;
   isResizing: boolean;
-  x: number | string;
-  y: number | string;
 }
 
 export const getTypeOfDefaultPosition = (position: {
@@ -45,23 +41,16 @@ export const useDraggable = (
     x: number | string;
     y: number | string;
   },
-  initialSize: {
-    width: number | string;
-    height: number | string;
-  }
+  setSizeAndPosition: React.Dispatch<React.SetStateAction<Size & Position>>
 ) => {
   const defaultDataTypes = getTypeOfDefaultPosition(position);
   const [data, setData] = useState<DraggableAndResizableElementsData>({
-    width: initialSize.width,
-    height: initialSize.height,
-    x: position.x,
-    y: position.y,
     isDragging: false,
     isResizing: false,
   });
 
   /**
-   * The point of this function is to change the position if by keeping units
+   * The point of this function is to change the position if necessary by keeping units
    * (% or px).
    * @param previousX position before movement on x axis
    * @param previousY position before movement on y axis
@@ -118,7 +107,7 @@ export const useDraggable = (
   const onMouseMove = useCallback(
     (e: MouseEvent) => {
       if (data.isDragging) {
-        setData((prevState) => {
+        setSizeAndPosition((prevState) => {
           const { x, y } = resolveXAndYPosition(
             prevState.x,
             prevState.y,

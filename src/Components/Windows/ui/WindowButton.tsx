@@ -3,8 +3,9 @@ import { ReactComponent as CloseIcon } from "../../../Icons/closeWindow.svg";
 import { ReactComponent as DashIcon } from "../../../Icons/minusIcon.svg";
 import { ReactComponent as PlusIcon } from "../../../Icons/plusIcon.svg";
 import React, { CSSProperties } from "react";
+import { WindowButton } from "../../API/Types";
 
-interface TerminalButtonProps {
+interface TerminalButtonProps extends WindowButton {
   type: ButtonTypes;
   isHovering?: boolean;
   style?: CSSProperties;
@@ -42,27 +43,30 @@ const getColor = (type: ButtonTypes) => {
   }
 };
 
-const getIcon = (type: ButtonTypes, style: CSSProperties) => {
-  switch (type) {
-    case ButtonTypes.CLOSE:
-      return <CloseIcon style={style} />;
-    case ButtonTypes.HIDE:
-      return <DashIcon style={style} />;
-    case ButtonTypes.FULL_SCREEN:
-      return <PlusIcon style={style} />;
-  }
-};
-
 const TerminalButton: React.FC<TerminalButtonProps> = ({
   type,
   isHovering,
   style,
+  onClick,
 }) => {
   const localClasses = useLocalStyles();
+
+  const getIcon = (type: ButtonTypes, style: CSSProperties) => {
+    switch (type) {
+      case ButtonTypes.CLOSE:
+        return <CloseIcon style={style} />;
+      case ButtonTypes.HIDE:
+        return <DashIcon style={style} />;
+      case ButtonTypes.FULL_SCREEN:
+        return <PlusIcon style={style} />;
+    }
+  };
+
   return (
     <IconButton
       className={localClasses.buttonStyles}
       style={{ backgroundColor: getColor(type), ...style }}
+      onClick={onClick}
     >
       {isHovering && getIcon(type, { width: 8, height: 8 })}
     </IconButton>
