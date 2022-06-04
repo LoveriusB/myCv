@@ -68,9 +68,28 @@ const BottomMenu: React.FC<BottomMenuProps> = ({
       <Grid className={localStyles.glass}>
         {windowsInBottomMenuList.map((windowItem, index) => {
           return (
-            <IconButton key={windowItem.key} onClick={() => onIconClick(index)}>
-              <TerminalIcon style={{ width: 42, height: 42 }} />
-            </IconButton>
+            <Grid>
+              <IconButton
+                key={windowItem.key}
+                onClick={() => onIconClick(index)}
+              >
+                <TerminalIcon style={{ width: 42, height: 42 }} />
+              </IconButton>
+              {!windowItem.isAppStarted && (
+                <Grid
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    backgroundColor: "white",
+                    position: "relative",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    bottom: 7,
+                  }}
+                />
+              )}
+            </Grid>
           );
         })}
       </Grid>

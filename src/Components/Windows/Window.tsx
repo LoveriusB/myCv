@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { WindowType, Position, Size, DefaultValueType } from "../API/Types";
 import { getTypeOfDefaultPosition } from "../Hooks/useDraggable";
-// import { useDraggable } from "../Hooks/useDraggable";
 import DraggableAndResizableWindow from "./Drag/DraggableAndResizableWindow";
 
 interface WindowProps {
@@ -54,6 +53,11 @@ const Window: React.FC<WindowProps> = ({
           isFullScreen: false,
         };
       });
+      console.log(
+        previousSizeAndPosition,
+        window.innerWidth,
+        window.innerHeight
+      );
       setSizeAndPosition(previousSizeAndPosition);
       setOpenedWindows(newOpenedWidowsList);
     } else {
@@ -70,6 +74,7 @@ const Window: React.FC<WindowProps> = ({
         x: sizeAndPosition.x,
         y: sizeAndPosition.y,
       });
+      console.log("saved value!!", sizeAndPosition);
       setOpenedWindows(newOpenedWidowsList);
       setPreviousSizeAndPosition(sizeAndPosition);
       setSizeAndPosition({

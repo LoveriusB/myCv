@@ -169,9 +169,14 @@ const DraggableAndResizableWindow: React.FC<
       ...prevData,
       isResizing: false,
     }));
+    console.log(ref.style);
     setSizeAndPosition({
-      width: toNumber(ref.style.width),
-      height: toNumber(ref.style.height),
+      width: isNaN(toNumber(ref.style.width))
+        ? ref.style.width
+        : toNumber(ref.style.width),
+      height: isNaN(toNumber(ref.style.height))
+        ? ref.style.height
+        : toNumber(ref.style.height),
       x,
       y,
     });

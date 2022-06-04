@@ -14,6 +14,7 @@ const allDefaultWindows: WindowType[] = [
     icon: TerminalIcon,
     isWindowHidden: false,
     isInBottomList: true,
+    isAppStarted: true,
   },
 ];
 

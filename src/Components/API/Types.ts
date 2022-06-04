@@ -48,6 +48,7 @@ export interface WindowType {
   >;
   key: string;
   component: FC<windowComponent>;
+  isAppStarted?: boolean;
   initialPosition?: Position;
   initialSize?: Size;
   isFullScreen?: boolean;
